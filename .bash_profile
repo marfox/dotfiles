@@ -10,14 +10,16 @@ fi
 PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \$ '
 export CLICOLOR=1
 
+# Colorful less with syntax highlight
+export LESS='-R' LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
+
 # Handy aliases
 alias ll='ls -l'
 alias la='ls -a'
 alias lr='ls -R'
 alias l='ls -lAtrh'
-alias less='less -R'
 alias grep='grep --color=auto'
-# use crep + cles instead of grep + less for coloured grep
+# less will get colors when piped
 alias crep='grep --color=always'
 alias egrep='egrep --color=auto'
 alias resapache='sudo /usr/sbin/apachectl -k restart'
@@ -39,21 +41,19 @@ alias mavenass='mvn clean assembly:assembly'
 export SVN_EDITOR="/usr/local/bin/vi"
 
 # History settings
-export HISTCONTROL=ignoreboth
-export HISTSIZE=2000
-export HISTFILESIZE=5000
+export HISTCONTROL=ignoreboth HISTSIZE=2000 HISTFILESIZE=5000
 # Uncomment the following for eternal history (buggy after some time)
 #shopt -s histappend
 #export HISTTIMEFORMAT="%F %T "
 #PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo $$ $USER "$(history 1)" >> ~/.bash_eternal_history'
 #eternalgrep () { grep "$1" ~/.bash_eternal_history; }
 
-# Proper curl, file, find, tar, GNU core utils + Homebrew sbin
-export PATH="/usr/local/opt/file-formula/bin:/usr/local/opt/curl/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/sbin:$PATH"
+# Proper curl, file, find, tar, GNU core utils + Homebrew sbin + Python3 user packages
+export PATH="/usr/local/opt/file-formula/bin:/usr/local/opt/curl/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/sbin:/Users/focs/Library/Python/3.6/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:/usr/local/opt/findutils/libexec/gnuman:/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
 
 # Useful to search Homebrew
-export HOMEBREW_GITHUB_API_TOKEN="token_here"
+export HOMEBREW_GITHUB_API_TOKEN="a5bacd91c1c1f733fdbb77f2d5f46283a5c98fbe"
 
 # Pretty-print coloured JSON
 j () { jq -C '.' "$1" | less; }
