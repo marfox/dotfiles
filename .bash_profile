@@ -10,8 +10,8 @@ fi
 PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \$ '
 export CLICOLOR=1
 
-# Colorful less with syntax highlight
-export LESS='-R' LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
+# Make less read ANSI colors
+export LESS='-R'
 
 # Handy aliases
 alias ll='ls -l'
