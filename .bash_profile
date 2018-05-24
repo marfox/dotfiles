@@ -23,7 +23,7 @@ alias grep='grep --color=auto'
 alias crep='grep --color=always'
 alias egrep='egrep --color=auto'
 alias resapache='sudo /usr/sbin/apachectl -k restart'
-alias pippa='pip3 install'
+alias pippa='pip install'
 alias refine='/Users/admin/apps/refine/refine &'
 # git
 alias kommit='git commit -am'
@@ -48,8 +48,10 @@ export HISTCONTROL=ignoreboth HISTSIZE=2000 HISTFILESIZE=5000
 #PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo $$ $USER "$(history 1)" >> ~/.bash_eternal_history'
 #eternalgrep () { grep "$1" ~/.bash_eternal_history; }
 
-# Proper curl, file, find, tar, GNU core utils + Homebrew sbin + Python3 user packages
-export PATH="/usr/local/opt/file-formula/bin:/usr/local/opt/curl/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/sbin:/Users/focs/Library/Python/3.6/bin:$PATH"
+# Proper curl, file, find, tar, GNU core utils
+# Homebrew sbin
+# Python 3 as default + its user-packages executables
+export PATH="/usr/local/opt/file-formula/bin:/usr/local/opt/curl/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/sbin:/usr/local/opt/python/libexec/bin:/Users/focs/Library/Python/3.6/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:/usr/local/opt/findutils/libexec/gnuman:/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
 
 # Useful to search Homebrew
