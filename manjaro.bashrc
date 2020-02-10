@@ -132,9 +132,8 @@ eternalhistory () { grep "$1" ~/.bash_eternal_history; }
 ###
 # END: history configuration
 ###
-
 ###
-# BEGIN: less configuration
+# BEGIN: less stuff
 ###
 # Make less more friendly for non-text input files, see man lesspipe
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -144,7 +143,10 @@ export LESS='-R'
 # Use 'cless' for syntax highlighting
 cless () {
     if [[ -f /usr/bin/src-hilite-lesspipe.sh ]]; then
-        LESSOPEN="|/usr/bin/src-hilite-lesspipe.sh %s" less -R "$@"
+        lssopn=${LESSOPEN}
+        LESSOPEN="|/usr/bin/src-hilite-lesspipe.sh %s"
+        less "$@"
+        LESSOPEN=${lssopn}
     else
         echo "source-highlight script not found at /usr/bin/src-hilite-lesspipe.sh"
         echo "You can install the package with:"
@@ -152,7 +154,7 @@ cless () {
     fi
 }
 ###
-# END: less configuration
+# END: less stuff
 ###
 
 #
