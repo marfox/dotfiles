@@ -126,19 +126,23 @@ shopt -s histappend
 # See HISTSIZE and HISTFILESIZE in man bash
 HISTSIZE=2000
 
+# Display date and time stamps
+HISTTIMEFORMAT="%F %T "
+
 # Eternal history with its grep facility
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo $$ $USER "$(history 1)" >> ~/.bash_eternal_history'
 eternalhistory () { grep "$1" ~/.bash_eternal_history; }
 ###
 # END: history configuration
 ###
+
 ###
 # BEGIN: less stuff
 ###
 # Make less more friendly for non-text input files, see man lesspipe
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-export LESS='-R'
+export LESS="-R"
 
 # Use 'cless' for syntax highlighting
 cless () {
