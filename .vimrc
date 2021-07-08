@@ -1,15 +1,29 @@
 " ==========================================================
 " Basic Settings
 " ==========================================================
-syntax on                     " syntax highlighing
-filetype on                   " try to detect filetypes
-filetype plugin indent on     " enable loading indent file for filetype
-set number                    " Display line numbers
-set numberwidth=1             " using only 1 column (and 1 space) while possible
-"set background=dark           " We are using dark background in vim
-set title                     " show title in console title bar
-set wildmenu                  " Menu completion in command mode on <Tab>
-set wildmode=longest,list,full             " BASH-like autocompletion + cycle through completion options
+syntax on                             " syntax highlighing
+filetype on                           " try to detect filetypes
+filetype plugin indent on             " enable loading indent file for filetype
+set number                            " display line numbers
+set numberwidth=1                     " using only 1 column (and 1 space) while possible
+set background=dark                   " dark background color scheme
+set title                             " show title in console title bar
+set wildmenu                          " menu completion in command mode on <TAB>
+set wildmode=longest,list,full        " BASH-like autocompletion + cycle through completion options
+
+""" Window panes
+set splitbelow						  " more intuitive horizontal window split
+set splitright						  " more intuitive vertical window split
+" <SHIFT> + [jkhl] to move around panes
+nnoremap <S-J> <C-W><C-J>
+nnoremap <S-K> <C-W><C-K>
+nnoremap <S-H> <C-W><C-H>
+nnoremap <S-L> <C-W><C-L>
+
+""" More readable colours
+highlight String ctermfg=Green          " green strings
+highlight Constant ctermfg=Yellow   " orange values
+highlight Comment ctermfg=Blue          " blue comments
 
 " don't bell or blink
 set noerrorbells
@@ -59,7 +73,11 @@ set incsearch               " Incrementally search while typing a /regex
 
 " ===========================================================
 " FileType specific changes
-" ============================================================
+" ===========================================================
+
+" Remove trailing spaces when saving some source code files
+autocmd FileType java,php,python,sh autocmd BufWritePre <buffer> %s/\s\+$//e
+
 " Mako/HTML
 autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2 setlocal ft=html
 autocmd FileType html,xhtml,xml,css setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
