@@ -8,7 +8,9 @@ case $- in
       *) return;;
 esac
 
-###### BEGIN history configuration ######
+###
+# BEGIN: history configuration
+###
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -19,10 +21,15 @@ shopt -s histappend
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=2000
 
+# display date and time stamps
+HISTTIMEFORMAT="%F %T "
+
 # Eternal history with its grep facility
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo $$ $USER "$(history 1)" >> ~/.bash_eternal_history'
 eternalhistory () { grep "$1" ~/.bash_eternal_history; }
-###### END history configuration ######
+###
+# END: history configuration
+###
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -32,15 +39,31 @@ shopt -s checkwinsize
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
 
-###### BEGIN less configuration ######
+###
+# BEGIN: less configuration
+###
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 export LESS='-R'
 
-# syntax highlight
-cless () { LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s" less -R "$@" ; }
-###### END less configuration ######
+# Use 'cless' for syntax highlighting
+cless () {
+    hilite_script="/usr/share/source-highlight/src-hilite-lesspipe.sh"
+    if [[ -f $hilite_script ]]; then
+        lssopn=${LESSOPEN}
+        LESSOPEN="|$hilite_script %s"
+        less "$@"
+        LESSOPEN=${lssopn}
+    else
+        echo "source-highlight script not found at $hilite_script"
+        echo "You can install the package with:"
+        echo "sudo apt-get install source-highlight"
+    fi
+}
+###
+# END: less stuff
+###
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -84,27 +107,32 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls + grep and also add handy aliases
-# By default, colors will NOT be shown with piped commands
-# Use 'cls' and 'crep' to always enable colors
+# Enable colour support of `ls` + `grep` and also add handy aliases.
+# By default, colours will NOT be shown with piped commands.
+# Use `cls`, `crep` to always enable them
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+
     alias cls='ls --color=always'
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
 
     alias crep='grep --color=always'
-    alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+    alias fcrep='fgrep --color=always'
+    alias ecrep='egrep --color=always'
 fi
 
-# some more ls aliases
-alias ll='ls -l'
-alias la='ls -a'
-alias lr='ls -R'
-alias l='ls -lAtrh'
+# Coloured GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# Pretty-print coloured JSON
+j () { jq -C '.' "$1" | less; }
+###
+# END: colours
+###
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -125,6 +153,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-# Pretty-print coloured JSON
-j () { jq -C '.' "$1" | less; }
