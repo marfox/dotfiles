@@ -1,2 +1,5 @@
 # dotfiles
-bash (debian, mac), tmux, vi configuration files
+Configuration files for:
+- BASH (Debian, Manjaro, MacOS)
+- vi (Debian, Manjaro, universal)
+- tmux
