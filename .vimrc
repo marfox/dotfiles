@@ -1,6 +1,5 @@
 " ===========================================
-" Vim scripts shipped with Debian
-" sudo apt-get install vim-scripts
+" Vim scripts inspired by Debian
 " NOTE: place them before the `filetype` line
 " ===========================================
 packadd! color_sampler_pack             " Lots of color schemes
