@@ -17,3 +17,4 @@ git clone git@github.com:vim-scripts/indentpython.vim.git ~/.vim/pack/$USER/opt/
 git clone git@github.com:vim-scripts/Colour-Sampler-Pack.git ~/.vim/pack/$USER/opt/color_sampler_pack
 ```
 
+Look for additional scripts & plugins at https://vimawesome.com/
