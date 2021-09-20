@@ -18,3 +18,10 @@ git clone git@github.com:vim-scripts/Colour-Sampler-Pack.git ~/.vim/pack/$USER/o
 ```
 
 Look for additional scripts & plugins at https://vimawesome.com/
+
+### To consider
+- Syntax checker: [syntastic](https://github.com/vim-syntastic/syntastic)
+- code completion: [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe)
+- good ol' TextMate snippets: [engine](https://github.com/sirver/ultisnips) & [DB](https://github.com/honza/vim-snippets)
+- color scheme: [solarized](https://github.com/altercation/vim-colors-solarized)
+- status & tab lines: [airline](https://github.com/vim-airline/vim-airline)
