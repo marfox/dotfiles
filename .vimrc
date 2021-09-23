@@ -83,10 +83,9 @@ set shiftwidth=4                        " Indents are 4 spaces
 set expandtab                           " SPACES INSTEAD OF TABS: this makes the difference
 set shiftround                          " Round indents to a multiple of `shiftwidth`
 
-" Folding
+" Folding (za)
 set foldmethod=indent                   " Fold on indents
 set foldlevel=99                        " Don't fold by default
-nnoremap <space> za                     " <SPACE> toggles folding
 
 " Code completion (if any)
 set completeopt=menuone,longest,preview " Autocomplete on typing
