@@ -1,8 +1,8 @@
 " ===========================================
-" Vim scripts inspired by Debian
+" Vim scripts
 " NOTE: place them before the `filetype` line
 " ===========================================
-packadd! color_sampler_pack             " Lots of color schemes
+packadd! colour-sampler-pack            " Lots of colour schemes
 packadd! nerd-commenter                 " Smart code commenting
 map <C-_> <plug>NERDCommenterToggle     " <CTRL>-slash toggles comments
 packadd! python-indent                  " Proper Python indentation
