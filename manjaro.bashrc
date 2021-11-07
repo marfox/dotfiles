@@ -146,11 +146,11 @@ export LESS="-R"
 # For some reason, lesspipe won't work with them
 # Let's do it the old way
 tless () {
-    cmd=
+    flag=
     case "$1" in
-        *.bz2) cmd=bunzip2;;
-        *.gz) cmd=gunzip;;
-        *.xz) cmd=unxz;;
+        *.bz2) flag=j;;
+        *.gz) flag=z;;
+        *.xz) flag=J;;
         *)
             echo "No .bz2 .gz or .xz file given"
             return 1
@@ -158,7 +158,7 @@ tless () {
     esac
     lssopn=${LESSOPEN}
     LESSOPEN=
-    $cmd < "$1" | tar tvf - | tarcolor | less
+    tar tv"$flag"f "$1" | tarcolor | less
     LESSOPEN=${lssopn}
 }
 
