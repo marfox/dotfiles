@@ -69,7 +69,7 @@ if ${use_color} ; then
 			eval $(dircolors -b /etc/DIR_COLORS)
 		fi
 	fi
-    
+
     # Layout: "user@host:workdir$ "
     # Colors, all bold:
     #   user@host = yellow
@@ -86,7 +86,7 @@ if ${use_color} ; then
 	alias grep='grep --colour=auto'
 	alias egrep='egrep --colour=auto'
 	alias fgrep='fgrep --colour=auto'
-    
+
     alias cls='ls --color=always'
     alias crep='grep --color=always'
 else
@@ -138,9 +138,29 @@ eternalhistory () { grep "$1" ~/.bash_eternal_history; }
 # BEGIN: less stuff
 ###
 # Make less more friendly for non-text input files, see man lesspipe
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/lesspipe.sh ] && eval "$(SHELL=/bin/sh lesspipe.sh)"
 
 export LESS="-R"
+
+# Use 'tless' to list compressed tarballs
+# For some reason, lesspipe won't work with them
+# Let's do it the old way
+tless () {
+    cmd=
+    case "$1" in
+        *.bz2) cmd=bunzip2;;
+        *.gz) cmd=gunzip;;
+        *.xz) cmd=unxz;;
+        *)
+            echo "No .bz2 .gz or .xz file given"
+            return 1
+            ;;
+    esac
+    lssopn=${LESSOPEN}
+    LESSOPEN=
+    $cmd < "$1" | tar tvf - | tarcolor | less
+    LESSOPEN=${lssopn}
+}
 
 # Use 'cless' for syntax highlighting
 cless () {
