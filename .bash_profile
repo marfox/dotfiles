@@ -1,61 +1,98 @@
-# Bash completion
-[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# GNU ls colors
-if [ -x /usr/local/opt/coreutils/libexec/gnubin ]; then
-    alias ls='ls --color=always'
-fi
+# BASH completion
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
-# Add friendly prompt + color
-PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \$ '
-export CLICOLOR=1
+# Override Apple with proper GNU core utils, curl, file, find, grep
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/opt/curl/bin:/opt/homebrew/opt/file-formula/bin:/opt/homebrew/opt/findutils/libexec/gnubin:/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 
-# Make less read ANSI colors
+###
+# BEGIN: history on steroids
+###
+
+# Don't put duplicate lines or lines starting with space in the history
+HISTCONTROL=ignoreboth
+
+# Enable history appending instead of overwriting
+shopt -s histappend
+
+# See HISTSIZE and HISTFILESIZE in man bash
+HISTSIZE=2000
+
+# Display date and time stamps
+HISTTIMEFORMAT="%F %T "
+
+# Eternal history with its grep facility
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo $$ $USER "$(history 1)" >> ~/.bash_eternal_history'
+eternalhistory () { grep "$1" ~/.bash_eternal_history; }
+
+###
+# END: history on steroids
+###
+
+
+###
+# BEGIN: less is more
+###
+
+# Read ANSI colors
 export LESS='-R'
 
-# Handy aliases
-alias ll='ls -l'
-alias la='ls -a'
-alias lr='ls -R'
-alias l='ls -lAtrh'
-alias grep='grep --color=auto'
-# less will get colors when piped
+# Lesspipe
+export LESSOPEN="|/opt/homebrew/bin/lesspipe.sh %s"
+
+# `cless` is the syntax-highlighted less
+cless () {
+    if [[ -f /opt/homebrew/bin/src-hilite-lesspipe.sh ]]; then
+        lssopn=${LESSOPEN}
+        LESSOPEN="|/opt/homebrew/bin/src-hilite-lesspipe.sh %s"
+        less "$@"
+        LESSOPEN=${lssopn}
+    else
+        echo "source-highlight script not found at /opt/homebrew/bin/src-hilite-lesspipe.sh"
+        echo "You can install the package with:"
+        echo "brew install source-highlight"
+    fi
+}
+
+###
+# END: less is more
+###
+
+
+###
+# BEGIN: color the terminal
+###
+
+# Friendly prompt
+# Layout: "user@host:workdir$ "
+# Colors, all bold:
+#   user@host = yellow
+#   workdir = blue
+#   ':' and '$' = white
+# See colors list at https://unix.stackexchange.com/a/124408
+PS1='\[\033[01;33m\]\u@\h\[\033[01;37m\]:\[\033[01;34m\]\w\[\033[01;37m\]\$\[\033[00m\] '
+export CLICOLOR=1
+
+# Colorful aliases
+alias ls='ls --color=auto'
+alias grep='grep --colour=auto'
+alias egrep='egrep --colour=auto'
+alias fgrep='fgrep --colour=auto'
+
+# `cls` and `crep` are always-colored ls and grep
+alias cls='ls --color=always'
 alias crep='grep --color=always'
-alias egrep='egrep --color=auto'
-alias resapache='sudo /usr/sbin/apachectl -k restart'
-alias pippa='pip install'
-alias refine='/Users/admin/apps/refine/refine &'
-# git
-alias kommit='git commit -am'
-alias st='git status'
 
-# Java
-# export JAVA_HOME="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home" # 6
-# export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_40.jdk/Contents/Home" # 7
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_152.jdk/Contents/Home" # 8
-
-# Maven
-alias mavenass='mvn clean assembly:assembly'
-
-# Subversion
-export SVN_EDITOR="/usr/local/bin/vi"
-
-# History settings
-export HISTCONTROL=ignoreboth HISTSIZE=2000 HISTFILESIZE=5000
-# Uncomment the following for eternal history (buggy after some time)
-#shopt -s histappend
-#export HISTTIMEFORMAT="%F %T "
-#PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo $$ $USER "$(history 1)" >> ~/.bash_eternal_history'
-#eternalgrep () { grep "$1" ~/.bash_eternal_history; }
-
-# Proper curl, file, find, tar, GNU core utils
-# Homebrew sbin
-# Python 3 as default + its user-packages executables
-export PATH="/usr/local/opt/file-formula/bin:/usr/local/opt/curl/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/sbin:/usr/local/opt/python/libexec/bin:/Users/focs/Library/Python/3.6/bin:$PATH"
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:/usr/local/opt/findutils/libexec/gnuman:/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
-
-# Useful to search Homebrew
-export HOMEBREW_GITHUB_API_TOKEN="a5bacd91c1c1f733fdbb77f2d5f46283a5c98fbe"
-
-# Pretty-print coloured JSON
+# Pretty-print colored JSON
 j () { jq -C '.' "$1" | less; }
+
+###
+# END: colors!
+###
+
+# Aliases
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
