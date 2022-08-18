@@ -19,6 +19,7 @@ set fileformat=unix                     " LF line breaks
 set number                              " Display line numbers ...
 set numberwidth=1                       " ... and pad single digits
 set title                               " Show title in the title bar
+set autoread                            " Auto-reload files that changed outside of Vim
 
 " Don't bell or blink
 set noerrorbells
@@ -110,4 +111,3 @@ au FileType html setlocal matchpairs+=<:>
 " ========================================================
 " TABS INSTEAD OF SPACES
 au FileType css,html,javascript,php setlocal noexpandtab
-
