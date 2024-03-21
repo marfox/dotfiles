@@ -33,37 +33,21 @@ eternalhistory () { grep "$1" ~/.bash_eternal_history; }
 
 
 ###
-# BEGIN: less is more
-###
-
-# Read ANSI colors
-export LESS='-R'
-
-# Lesspipe
-export LESSOPEN="|/opt/homebrew/bin/lesspipe.sh %s"
-
-# `cless` is the syntax-highlighted less
-cless () {
-    if [[ -f /opt/homebrew/bin/src-hilite-lesspipe.sh ]]; then
-        lssopn=${LESSOPEN}
-        LESSOPEN="|/opt/homebrew/bin/src-hilite-lesspipe.sh %s"
-        less "$@"
-        LESSOPEN=${lssopn}
-    else
-        echo "source-highlight script not found at /opt/homebrew/bin/src-hilite-lesspipe.sh"
-        echo "You can install the package with:"
-        echo "brew install source-highlight"
-    fi
-}
-
-###
-# END: less is more
-###
-
-
-###
 # BEGIN: color the terminal
 ###
+
+# Less is more
+# https://github.com/wofr06/lesspipe?tab=readme-ov-file#5-colorizing-the-output
+if [[ -f /opt/homebrew/bin/lesspipe.sh ]]; then
+    export LESS="-R"
+    # `pygmentize -L styles` lists available styles
+    export LESSCOLORIZER="pygmentize -O style=gruvbox-dark"
+    export LESSOPEN="|/opt/homebrew/bin/lesspipe.sh %s"
+else
+    echo "lesspipe not found at /opt/homebrew/bin/lesspipe.sh"
+    echo "You can install the package with:"
+    echo "brew install lesspipe"
+fi
 
 # Friendly prompt
 # Layout: "user@host:workdir$ "
