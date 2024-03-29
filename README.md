@@ -6,16 +6,16 @@ Configuration files for:
 
 ## Vim scripts installation
 ```bash
-git clone git@github.com:preservim/nerdcommenter.git ~/.vim/pack/$USER/opt/nerd-commenter
+git clone https://github.com/preservim/nerdcommenter.git ~/.vim/pack/$USER/opt/nerd-commenter
 ```
 ```bash
-git clone git@github.com:vim-scripts/indentpython.vim.git ~/.vim/pack/$USER/opt/python-indent
+git clone https://github.com/vim-scripts/indentpython.vim.git ~/.vim/pack/$USER/opt/python-indent
 ```
 ```bash
-git clone git@github.com:vim-scripts/Colour-Sampler-Pack.git ~/.vim/pack/$USER/opt/colour-sampler-pack
+git clone https://github.com/vim-scripts/Colour-Sampler-Pack.git ~/.vim/pack/$USER/opt/colour-sampler-pack
 ```
 ```bash
-git clone git@github.com:vim-syntastic/syntastic.git ~/.vim/pack/$USER/opt/syntastic
+git clone https://github.com/vim-syntastic/syntastic.git ~/.vim/pack/$USER/opt/syntastic
 ```
 
 Look for additional scripts & plugins at https://vimawesome.com/
