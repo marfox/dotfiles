@@ -110,4 +110,4 @@ au FileType html setlocal matchpairs+=<:>
 " https://www.mediawiki.org/wiki/Manual:Coding_conventions
 " ========================================================
 " TABS INSTEAD OF SPACES
-au FileType css,html,javascript,php setlocal noexpandtab
+au FileType css,html,javascript,less,php setlocal noexpandtab
