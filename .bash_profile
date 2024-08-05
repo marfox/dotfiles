@@ -33,7 +33,7 @@ eternalhistory () { grep "$1" ~/.bash_eternal_history; }
 
 
 ###
-# BEGIN: color the terminal
+# BEGIN: colorize the terminal
 ###
 
 # Less is more
@@ -73,7 +73,7 @@ alias crep='grep --color=always'
 j () { jq -C '.' "$1" | less; }
 
 ###
-# END: colors!
+# END: colorize the terminal
 ###
 
 # Aliases

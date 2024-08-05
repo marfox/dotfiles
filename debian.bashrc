@@ -9,7 +9,7 @@ case $- in
 esac
 
 ###
-# BEGIN: history configuration
+# BEGIN: history on steroids
 ###
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -28,7 +28,7 @@ HISTTIMEFORMAT="%F %T "
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo $$ $USER "$(history 1)" >> ~/.bash_eternal_history'
 eternalhistory () { grep "$1" ~/.bash_eternal_history; }
 ###
-# END: history configuration
+# END: history on steroids
 ###
 
 # check the window size after each command and, if necessary,
@@ -40,29 +40,30 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 ###
-# BEGIN: less configuration
+# BEGIN: less is more
 ###
+
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-export LESS='-R'
+export LESS="-R"
 
-# Use 'cless' for syntax highlighting
-cless () {
-    hilite_script="/usr/share/source-highlight/src-hilite-lesspipe.sh"
-    if [[ -f $hilite_script ]]; then
-        lssopn=${LESSOPEN}
-        LESSOPEN="|$hilite_script %s"
-        less "$@"
-        LESSOPEN=${lssopn}
-    else
-        echo "source-highlight script not found at $hilite_script"
-        echo "You can install the package with:"
-        echo "sudo apt-get install source-highlight"
-    fi
-}
+# https://github.com/wofr06/lesspipe?tab=readme-ov-file#5-colorizing-the-output
+if [[ -f /usr/bin/pygmentize ]]; then
+    # `pygmentize -L styles` lists available styles
+    export LESSCOLORIZER="pygmentize -O style=tango"
+else
+    echo "pygmentize not found at /usr/bin/pygmentize"
+    echo "You can install the package with:"
+    echo "sudo apt-get install pygmentize"
+fi
+
 ###
-# END: less stuff
+# END: less is more
+###
+
+###
+# BEGIN: colorize the terminal
 ###
 
 # set variable identifying the chroot you work in (used in the prompt below)
@@ -107,31 +108,30 @@ xterm*|rxvt*)
     ;;
 esac
 
-# Enable colour support of `ls` + `grep` and also add handy aliases.
-# By default, colours will NOT be shown with piped commands.
-# Use `cls`, `crep` to always enable them
+# Colorful aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 
-    alias cls='ls --color=always'
     alias ls='ls --color=auto'
-
     alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+    alias fgrep='fgrep --color=auto'
 
+    # `cls` and `crep` are always-colored ls and grep
+    alias cls='ls --color=always'
     alias crep='grep --color=always'
-    alias fcrep='fgrep --color=always'
     alias ecrep='egrep --color=always'
+    alias fcrep='fgrep --color=always'
 fi
 
-# Coloured GCC warnings and errors
+# Colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # Pretty-print coloured JSON
 j () { jq -C '.' "$1" | less; }
+
 ###
-# END: colours
+# END: colorize the terminal
 ###
 
 # Alias definitions.
