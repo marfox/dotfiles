@@ -17,12 +17,15 @@ git clone https://github.com/vim-scripts/Colour-Sampler-Pack.git ~/.vim/pack/$US
 ```bash
 git clone https://github.com/vim-syntastic/syntastic.git ~/.vim/pack/$USER/opt/syntastic
 ```
+```bash
+git clone https://github.com/vim-airline/vim-airline ~/.vim/pack/$USER/opt/vim-airline
+```
+```bash
+git clone https://github.com/morhetz/gruvbox.git ~/.vim/pack/$USER/opt/gruvbox
+```
 
 Look for additional scripts & plugins at https://vimawesome.com/
 
 ### To consider
-- [x] Syntax checker: [syntastic](https://github.com/vim-syntastic/syntastic)
 - [ ] code completion: [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe)
 - [ ] good ol' TextMate snippets: [engine](https://github.com/sirver/ultisnips) & [DB](https://github.com/honza/vim-snippets)
-- [ ] color scheme: [solarized](https://github.com/altercation/vim-colors-solarized)
-- [ ] status & tab lines: [airline](https://github.com/vim-airline/vim-airline)

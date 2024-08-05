@@ -2,11 +2,12 @@
 " Vim scripts
 " NOTE: place them before the `filetype` line
 " ===========================================
-packadd! colour-sampler-pack            " Lots of colour schemes
+packadd! colour-sampler-pack            " Lots of color schemes
 packadd! nerd-commenter                 " Smart code commenting
 map <C-_> <plug>NERDCommenterToggle     " <CTRL>-slash toggles comments
 packadd! python-indent                  " Proper Python indentation
 packadd! syntastic                      " Syntax check on save
+packadd! vim-airline                    " Status bar
 
 
 " =======
@@ -43,15 +44,22 @@ nnoremap <S-H> <C-W><C-H>
 nnoremap <S-L> <C-W><C-L>
 
 
-" =======
-" Colours
-" =======
-set background=dark                     " Dark background optimization
+" ======
+" Colors
+" ======
+" Gruvbox - https://github.com/morhetz/gruvbox
+" Configuration from https://stackoverflow.com/a/71718078/10719765
+colorscheme gruvbox
+hi Normal guibg=NONE ctermbg=NONE
 
-" More readable colours
-highlight String ctermfg=Green          " Green strings
-highlight Constant ctermfg=DarkYellow   " Orange values
-highlight Comment ctermfg=Blue          " Blue comments
+" Tango - https://github.com/vim-scripts/Colour-Sampler-Pack
+"colorscheme tango
+
+" Vanilla
+"set background=dark                     " Dark background optimization
+"highlight String ctermfg=Green          " Green strings
+"highlight Constant ctermfg=DarkYellow   " Orange values
+"highlight Comment ctermfg=Blue          " Blue comments
 
 
 " ======
@@ -68,7 +76,7 @@ set incsearch                           " Search while typing
 " Editor
 " ======
 set pastetoggle=<F4>                    " <F4> toggles paste mode (no indentation)
-set colorcolumn=80                      " (Ugly) vertical highlight at column #80
+set colorcolumn=90                      " (Ugly) vertical highlight at the given column
 set cursorline                          " Horizontal line where the cursor is
 set ruler                               " 'line #,column #' of the cursor at the bottom-right
 set virtualedit=block                   " Let the cursor move past the last char in <C-v> mode
@@ -110,4 +118,4 @@ au FileType html setlocal matchpairs+=<:>
 " https://www.mediawiki.org/wiki/Manual:Coding_conventions
 " ========================================================
 " TABS INSTEAD OF SPACES
-au FileType css,html,javascript,less,php setlocal noexpandtab
+au FileType css,html,javascript,json,less,php setlocal noexpandtab
